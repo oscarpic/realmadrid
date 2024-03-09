@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>   
+	<meta charset="UTF-8">
+    <title>Página de Inicio - Real Madrid</title>
+	<style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 40%;
+            margin-left: 30%;
+            text-align: center;
+        }
+				
+        .container img {
+            width: 200px; /* Ajusta el ancho de las imágenes según sea necesario */
+            height: auto; /* Altura automática para mantener la proporción */
+            margin: 10px; /* Margen entre las imágenes */
+            cursor: pointer; /* Cambiar el cursor al pasar sobre la imagen */
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+		
+        .login-box {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+		
+		.containerHead {
+            width: 40%;
+            margin-left: 30%;
+            text-align: center;
+        }
+
+		.image-container {
+			display: flex; /* Mostrar las imágenes en línea */
+			justify-content: center; /* Centrar las imágenes horizontalmente */
+		}
+
+    </style>
+</head>
+	
+<body>
+	
+    <div class="containerHead">
+		<img src="logo.jpg" title="Real Madrid">
+		<div class="login-box">            
+			<div id="mensajeUsuario"></div> 
+		</div>
+	</div>
+	<div class="container">   
+        <div class="image-container">		
+            <img onclick="goTo('./titulos.html')" src="7448b8f48af3fe4dc79b56798b8a0faa.jpg" title="títulos" width="200px" height="200px" >
+            <img onclick="goTo('./misonces.html')" title="Mis onces" src="onces.jpg" width="200px" height="200px">
+            <img onclick="goToURL('https://www.realmadrid.com/es-ES/futbol/primer-equipo-masculino/plantilla')" src="pngtree-soccer-team-vector-png-image_12149217.jpg" title="plantilla" width="200px" height="200px">
+            <img onclick="goToURL('https://www.google.com/search?q=proximo+partido+real+madrid&sca_esv=421dc4c8986dd1d4&sxsrf=ACQVn08Rm6R0hxrOryDtgI9xLcGcymcqcA%3A1709986210322&ei=olHsZe6nE9KlkdUPxY620As&oq=proximo+p&gs_lp=Egxnd3Mtd2l6LXNlcnAiCXByb3hpbW8gcCoCCAAyFRAAGIAEGBQYhwIYsQMYgwEYRhj9ATIKEAAYgAQYFBiHAjILEAAYgAQYsQMYgwEyCxAAGIAEGLEDGIMBMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyDhAAGIAEGIoFGLEDGIMBMiEQABiABBgUGIcCGLEDGIMBGEYY_QEYlwUYjAUY3QTYAQJIlSlQ3Q9YqyJwAngAkAEAmAGgAaABuQiqAQM0Lja4AQPIAQD4AQGYAgygAvYPwgIKEAAYRxjWBBiwA8ICDRAAGIAEGIoFGEMYsAPCAhkQLhiABBiKBRhDGMcBGNEDGMgDGLAD2AEBwgITEC4YgAQYigUYQxjIAxiwA9gBAcICDxAjGIAEGIoFGCcYRhj7AcICChAjGIAEGIoFGCfCAhAQABiABBiKBRhDGLEDGIMBwgIOEC4YgAQYsQMYxwEY0QPCAgsQLhiABBixAxiDAcICGRAAGIAEGIoFGEYY-wEYlwUYjAUY3QTYAQLCAhAQLhhDGIMBGLEDGIAEGIoFwgIPECMYgAQYigUYJxhGGP8BwgIIEAAYgAQYsQPCAgsQLhiABBjHARjRA8ICGRAAGIAEGIoFGEYY_wEYlwUYjAUY3QTYAQLCAhAQABiABBgUGIcCGLEDGIMBwgIUEC4YgAQYsQMYgwEYxwEYrwEYjgWYAwCIBgGQBgy6BgQIARgIugYGCAIQARgTkgcHMy44LjYtMaAHt3A&sclient=gws-wiz-serp')" src="next match.jpg" title="próximo partido" width="200px" height="200px">
+        </div>
+    </div>
+
+    <script>
+		
+		function goTo(path){
+			document.location.href=path;
+		}
+		function goToURL(url){
+			window.open(url, '_blank');
+		}
+		
+        // Obtener el parámetro de la URL
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+        // Obtener el nombre de usuario de la URL
+        var usuario = getParameterByName('usuario');
+        if(usuario) {
+            // Mostrar el nombre de usuario en el div
+            document.getElementById('mensajeUsuario').innerHTML = '<p>Bienvenido, ' + usuario + '!</p>';
+        }
+		
+		// Obtener el nombre de usuario de la URL
+        var pass = getParameterByName('pass');
+        if(usuario != "madrid" || pass != "messieskk") {
+            alert("Contraseña no válida. Peinate un rato");
+			goTo("./error.html");
+		}
+
+    </script>
+	
+</body>
+</html>
