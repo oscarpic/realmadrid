@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Memoria - Dos Jugadores</title>
+    <style>
+        /* Estilos CSS para las tarjetas */
+        .memory-card {
+            width: 210px;
+            height: 210px;
+            background-color: #FFD700;
+            border: 1px solid #ccc;
+            margin: 10px;
+            display: inline-block;
+            cursor: pointer;
+            /* Estilos específicos del juego de memoria */
+            font-size: 10; /* Eliminar el espacio entre las tarjetas */
+            background-size: cover;
+        }
+
+        #current-player {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        #game-over {
+            font-size: 24px;
+            font-weight: bold;
+            display: none;
+            margin-top: 20px;
+        }
+		body {
+    background-color: gray; /* Establece el color de fondo del cuerpo como azul */
+}
+    </style>
+</head>
+<body>
+    <h1>Juego de Memoria - Dos Jugadores</h1>
+
+    <div id="current-player">Turno del Jugador 1</div>
+    <div id="game-board">
+        <!-- Aquí se generarán las tarjetas del juego de memoria dinámicamente -->
+    </div>
+
+    <div id="score">
+        <span id="player1-score">Jugador 1: 0</span>
+        <span id="player2-score">Jugador 2: 0</span>
+    </div>
+
+    <div id="game-over"></div>
+
+    <script>
+        // Arreglo que contiene los nombres de las imágenes
+        const images = ['BELLINGHAM.webp', 'CAMAVINGA.webp', 'CARVAJAL.webp', 'COURTOIS.webp', 'MILITAO.webp', 'MODRIC.webp', 'RODRYGO.webp', 'RUDIGER.webp', 'VINI.webp', 'VALVERDE.webp', 'KROOS.webp'];
+
+        // Duplica las imágenes para tener pares
+        const cards = images.concat(images);
+
+        // Función para mezclar las cartas
+        function shuffle(array) {
+            let currentIndex = array.length, temporaryValue, randomIndex;
+            while (0 !== currentIndex) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                temporaryValue = array[currentIndex];
+                array[currentIndex] = array[randomIndex];
+                array[randomIndex] = temporaryValue;
+            }
+            return array;
+        }
+
+        // Mezcla las cartas antes de mostrarlas
+        shuffle(cards);
+
+        const gameBoard = document.getElementById('game-board');
+        const currentPlayerDisplay = document.getElementById('current-player');
+        const player1ScoreDisplay = document.getElementById('player1-score');
+        const player2ScoreDisplay = document.getElementById('player2-score');
+        const gameOverDisplay = document.getElementById('game-over');
+        let firstCard = null;
+        let secondCard = null;
+        let currentPlayer = 1;
+        let player1Score = 0;
+        let player2Score = 0;
+
+        // Función para manejar clics en las tarjetas
+        function handleClick(card, index) {
+            if (!card.classList.contains('matched') && !card.classList.contains('selected')) {
+                card.style.backgroundImage = `url(${cards[index]})`;
+                card.classList.add('selected');
+
+                if (!firstCard) {
+                    firstCard = { card, index };
+                } else if (!secondCard) {
+                    secondCard = { card, index };
+                    checkMatch();
+                }
+            }
+        }
+
+        // Función para verificar si las dos tarjetas seleccionadas coinciden
+        function checkMatch() {
+            if (firstCard && secondCard) {
+                const firstIndex = firstCard.index;
+                const secondIndex = secondCard.index;
+
+                if (cards[firstIndex] === cards[secondIndex]) {
+                    // Coincidencia: Incrementa la puntuación del jugador actual y marca las tarjetas como coincidentes
+                    if (currentPlayer === 1) {
+                        player1Score++;
+                        player1ScoreDisplay.textContent = `Jugador 1: ${player1Score}`;
+                    } else {
+                        player2Score++;
+                        player2ScoreDisplay.textContent = `Jugador 2: ${player2Score}`;
+                    }
+                    firstCard.card.classList.add('matched');
+                    secondCard.card.classList.add('matched');
+                    resetCards();
+                    checkWin();
+                    return;
+                } else {
+                    // No coincidencia: Oculta las tarjetas después de un breve retraso y cambia de jugador
+                    setTimeout(() => {
+                        firstCard.card.style.backgroundImage = '';
+                        secondCard.card.style.backgroundImage = '';
+                        firstCard.card.classList.remove('selected');
+                        secondCard.card.classList.remove('selected');
+                        switchPlayer();
+                        resetCards();
+                        updateCurrentPlayerDisplay();
+                    }, 1000);
+                }
+            }
+        }
+
+        // Función para cambiar al siguiente jugador
+        function switchPlayer() {
+            currentPlayer = currentPlayer === 1 ? 2 : 1;
+        }
+
+        // Función para actualizar la indicación del jugador actual
+        function updateCurrentPlayerDisplay() {
+            currentPlayerDisplay.textContent = `Turno del Jugador ${currentPlayer}`;
+        }
+
+        // Función para reiniciar las tarjetas seleccionadas
+        function resetCards() {
+            firstCard = null;
+            secondCard = null;
+        }
+
+        // Función para verificar si algún jugador ha ganado
+        function checkWin() {
+            const matchedCards = document.querySelectorAll('.memory-card.matched');
+            if (matchedCards.length === cards.length) {
+                gameOverDisplay.textContent = `¡Juego completado! Marcador final: Jugador 1: ${player1Score}, Jugador 2: ${player2Score}`;
+                gameOverDisplay.style.display = 'block';
+
+                // Reiniciar el juego después de 5 segundos
+                setTimeout(() => {
+                    resetGame();
+                }, 5000);
+            }
+        }
+
+        // Función para reiniciar el juego
+        function resetGame() {
+            // Reiniciar la puntuación y las tarjetas
+            player1Score = 0;
+            player2Score = 0;
+            player1ScoreDisplay.textContent = `Jugador 1: ${player1Score}`;
+            player2ScoreDisplay.textContent = `Jugador 2: ${player2Score}`;
+
+            // Reiniciar la indicación del jugador actual
+            currentPlayer = 1;
+            updateCurrentPlayerDisplay();
+
+            // Ocultar el mensaje de juego completado
+            gameOverDisplay.style.display = 'none';
+
+            // Reiniciar el estado de las tarjetas
+            const memoryCards = document.querySelectorAll('.memory-card');
+            memoryCards.forEach(card => {
+                card.style.backgroundImage = '';
+                card.classList.remove('matched');
+                card.classList.remove('selected');
+            });
+
+            // Mezclar las cartas nuevamente
+            shuffle(cards);
+        }
+
+        // Genera las tarjetas del juego de memoria
+        for (let i = 0; i < cards.length; i++) {
+            const card = document.createElement('div');
+            card.className = 'memory-card';
+            card.setAttribute('data-index', i); // Añade un atributo de datos para el índice
+            card.addEventListener('click', function() {
+                handleClick(card, i);
+            });
+            gameBoard.appendChild(card);
+        }
+
+        // Actualiza la indicación del jugador actual al cargar la página
+        updateCurrentPlayerDisplay();
+    </script>
+</body>
+</html>

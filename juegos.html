@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seleccionar Juego</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .game-option {
+            display: inline-block;
+            margin: 20px;
+            cursor: pointer;
+        }
+
+        .game-option img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .game-option img:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Selecciona un Juego</h1>
+        <div class="game-option" onclick="redirectToGame('tres-en-raya.html')">
+            <img src="tres en raya.webp" alt="Tres en Raya">
+            <p>Tres en Raya</p>
+        </div>
+        <div class="game-option" onclick="redirectToGame('quiz.html')">
+            <img src="preguntas.jpg" alt="Quiz">
+            <p>Quiz</p>
+        </div>
+		<div class="game-option" onclick="redirectToGame('memory.html')">
+            <img src="memory.jfif" alt="memory">
+            <p>Memory</p>
+        </div>
+		<div class="game-option" onclick="redirectToGame('quien es quien.html')">
+            <img src="adivina.jpeg" alt="¿Quién es quién?">
+            <p>¿Quién es quién?</p>
+        </div>
+    </div>
+
+    <script>
+        function redirectToGame(gameURL) {
+            window.location.href = gameURL;
+        }
+    </script>
+</body>
+</html>

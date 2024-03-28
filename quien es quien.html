@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Juego de ¿Quién es quién?</title>
+<style>
+    /* Estilos básicos para mejorar la apariencia */
+    body {
+        background-image: url('fondo.jpg');
+        background-size: cover; /* Ajusta el tamaño de la imagen para cubrir toda la pantalla */
+        background-position: center; /* Centra la imagen */
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }
+    #contenedor-imagenes {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .imagen {
+        width: 200px;
+        margin: 20px;
+        cursor: pointer;
+        background-color:#FFD700;
+    }
+    #preguntas {
+        margin-top: 20px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+    #preguntas ul {
+        text-align: left;
+    }
+    #pregunta-texto {
+        color: white;
+        margin-left: 2%;
+    }
+</style>
+</head>
+<body>
+<h1>Juego de ¿Quién es quién?</h1>
+<div id="preguntas">
+    <p>Preguntas posibles:</p>
+    <ul>
+        <li style="cursor:pointer" onclick="document.getElementById('preguntaInput').value='¿Tiene el pelo largo?'">¿Tiene el pelo largo?</li>
+        <li style="cursor:pointer" onclick="document.getElementById('preguntaInput').value='¿Tiene los ojos azules?'">¿Tiene los ojos azules?</li>
+        <li style="cursor:pointer" onclick="document.getElementById('preguntaInput').value='¿Es portero?'">¿Es portero?</li>
+        <li style="cursor:pointer" onclick="document.getElementById('preguntaInput').value='¿Tiene barba?'">¿Tiene barba?</li>
+        <li style="cursor:pointer" onclick="document.getElementById('preguntaInput').value='¿Es delantero?'">¿Es delantero?</li>
+        <li style="cursor:pointer" onclick="document.getElementById('preguntaInput').value='¿Es defensa?'">¿Es defensa?</li>
+        <li style="cursor:pointer" onclick="document.getElementById('preguntaInput').value='¿Es mediocentro?'">¿Es mediocentro?</li>
+        <li style="cursor:pointer" onclick="document.getElementById('preguntaInput').value='¿Es rubio?'">¿Es rubio?</li>
+    </ul>
+</div>
+<p id="pregunta-texto">Escribe una pregunta sobre el personaje en el cuadro de texto a continuación:</p>
+<input type="text" id="preguntaInput">
+<button onclick="hacerPregunta()">Preguntar</button>
+<div id="contenedor-imagenes">
+    <!-- Aquí van las imágenes -->
+    <img class="imagen" src="BELLINGHAM.webp" alt="Bellingham" onclick="verificarRespuesta('BELLINGHAM.webp')">
+    <img class="imagen" src="CAMAVINGA.webp" alt="Camavinga" onclick="verificarRespuesta('CAMAVINGA.webp')">
+    <img class="imagen" src="COURTOIS.webp" alt="Courtois" onclick="verificarRespuesta('COURTOIS.webp')">
+    <img class="imagen" src="CARVAJAL.webp" alt="Carvajal" onclick="verificarRespuesta('CARVAJAL.webp')">
+    <img class="imagen" src="KROOS.webp" alt="Kroos" onclick="verificarRespuesta('KROOS.webp')">
+    <img class="imagen" src="MILITAO.webp" alt="Militao" onclick="verificarRespuesta('MILITAO.webp')">
+    <img class="imagen" src="MODRIC.webp" alt="Modric" onclick="verificarRespuesta('MODRIC.webp')">
+    <img class="imagen" src="RODRYGO.webp" alt="Rodrygo" onclick="verificarRespuesta('RODRYGO.webp')">
+    <img class="imagen" src="RUDIGER.webp" alt="Rudiger" onclick="verificarRespuesta('RUDIGER.webp')">
+    <img class="imagen" src="VALVERDE.webp" alt="Valverde" onclick="verificarRespuesta('VALVERDE.webp')">
+    <img class="imagen" src="VINI.webp" alt="Vini" onclick="verificarRespuesta('VINI.webp')">
+</div>
+
+<script>
+var imagenes = [
+    { src: "BELLINGHAM.webp", atributos: ["barba", "mediocentro"] },
+    { src: "CAMAVINGA.webp", atributos: ["pelo largo", "mediocentro"] },
+    { src: "COURTOIS.webp", atributos: ["portero"] },
+    { src: "CARVAJAL.webp", atributos: ["defensa"] },
+    { src: "KROOS.webp", atributos: ["pelo largo", "ojos azules", "mediocentro"] },
+    { src: "MILITAO.webp", atributos: ["pelo largo", "barba", "defensa"] },
+    { src: "MODRIC.webp", atributos: ["pelo largo", "barba", "mediocentro"] },
+    { src: "RODRYGO.webp", atributos: ["delantero"] },
+    { src: "RUDIGER.webp", atributos: ["barba", "defensa"] },
+    { src: "VALVERDE.webp", atributos: ["mediocentro"] },
+    { src: "VINI.webp", atributos: ["delantero"] }
+];
+
+var personajeSeleccionado;
+var intentosRestantes = 3;
+var preguntasRealizadas = 0;
+
+function verificarRespuesta(personaje) {
+    if (personaje === personajeSeleccionado.src) {
+        // Redirige a la página "you_win.html" si la respuesta es correcta
+        window.location.href = "you-win.html";
+    } else {
+        intentosRestantes--;
+        if (intentosRestantes > 0) {
+            alert("Respuesta incorrecta. Intentos restantes: " + intentosRestantes);
+        } else {
+            // Redirige a la página "you_lose.html" si se agotan los intentos
+            window.location.href = "you-lose.html";
+        }
+    }
+}
+
+function hacerPregunta() {
+    if (preguntasRealizadas >= 3) {
+        alert("Ya has realizado el máximo de preguntas permitidas.");
+        reiniciarJuego();
+        return;
+    }
+
+    var pregunta = document.getElementById("preguntaInput").value.toLowerCase();
+    if (pregunta.trim() === "") {
+        alert("Por favor, escribe una pregunta.");
+        return;
+    }
+
+    var atributosPersonaje = personajeSeleccionado.atributos;
+    var atributoEncontrado = false;
+    for (var i = 0; i < atributosPersonaje.length; i++) {
+        if (pregunta.includes(atributosPersonaje[i])) {
+            atributoEncontrado = true;
+            alert("Sí");
+            break;
+        }
+    }
+
+    if (!atributoEncontrado) {
+        alert("No");
+    }
+
+    preguntasRealizadas++;
+}
+
+function reiniciarJuego() {
+    // Reinicia los intentos y vuelve a seleccionar un personaje
+    intentosRestantes = 3;
+    preguntasRealizadas = 0;
+    setTimeout(seleccionarPersonaje, 5000); // Espera 5 segundos antes de reiniciar
+}
+
+function seleccionarPersonaje() {
+    // Selecciona un personaje aleatorio
+    var indice = Math.floor(Math.random() * imagenes.length);
+    personajeSeleccionado = imagenes[indice];
+}
+
+// Llama a seleccionarPersonaje al cargar la página para seleccionar un personaje inicial
+window.onload = seleccionarPersonaje;
+</script>
+
+</body>
+</html>

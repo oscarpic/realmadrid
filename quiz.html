@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>   
+    <meta charset="UTF-8">
+    <title>Página de Inicio - Real Madrid</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo-container {
+            margin-top: 20px;
+        }
+
+        img.real-madrid-logo {
+            max-width: 200px;
+            height: auto;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+
+        .original-button {
+            line-height: 1;
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 18px;
+            border-radius: 10px;
+            width: 200px;
+            height: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            padding: 2px;
+            background-color: #1976d2; /* Establece el color de fondo predeterminado */
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        .original-button:hover {
+            opacity: 0.7;
+        }
+        
+        img.correcta,
+        img.incorrecta {
+            display: block;
+            margin: 10px auto 0; /* Ajuste para posicionar las imágenes debajo de las respuestas */
+            max-width: 200px; /* Ajusta el tamaño de las imágenes correctas e incorrectas */
+            height: auto;
+        }
+    </style>
+    
+    <script>
+        var preguntas = [];
+        var i = 0; // Corregido para iniciar desde 0
+        preguntas[i++] = "¿Cuál es el año de fundación del Real Madrid?$1902$1910$1920";
+        preguntas[i++] = "¿En qué estadio juega habitualmente el Real Madrid sus partidos de local?$Estadio Santiago Bernabéu$Camp Nou$Wanda Metropolitano";
+        preguntas[i++] = "¿Quién fue el entrenador del Real Madrid en la temporada 2019-2020?$Zinedine Zidane$Pep Guardiola$Jurgen Klopp";
+        preguntas[i++] = "¿Cuántas Ligas de Campeones de la UEFA ha ganado el Real Madrid hasta la fecha?$13$9$17";
+        
+        preguntas[i++] = "¿Quién es el presidente actual del Real Madrid?$Florentino Pérez$Joan Laporta$Josep Maria Bartomeu";
+        preguntas[i++] = "¿Cuál es el nombre del himno oficial del Real Madrid?$Hala Madrid$We Will Rock You$You'll Never Walk Alone";
+        preguntas[i++] = "¿Quién es el jugador más joven en debutar con el primer equipo del Real Madrid?$Alberto Rivera$Raúl González$Iker Casillas";
+        preguntas[i++] = "¿Cuál fue el primer título de Liga conquistado por el Real Madrid?$1932$1925$1940";
+        preguntas[i++] = "¿Cuál es el número de socio honorario de Real Madrid de Alfredo Di Stéfano?$7$1$10";
+        preguntas[i++] = "¿Qué jugador del Real Madrid ganó el premio FIFA World Player en 2002?$Ronaldo Nazário$Zinedine Zidane$Luis Figo";
+        preguntas[i++] = "¿En qué año se fundó la cantera de jóvenes del Real Madrid, 'La Fábrica'?$1986$1975$1995";
+        preguntas[i++] = "¿Quién es el máximo asistente histórico del Real Madrid?$Cristiano Ronaldo$Lionel Messi$Zinedine Zidane";
+        preguntas[i++] = "¿Qué jugador ha sido nombrado capitán del Real Madrid tras la salida de Sergio Ramos?$Karim Benzema$Luka Modric$Marcelo Vieira";
+        preguntas[i++] = "¿Cuántas veces ha ganado el Real Madrid el Mundial de Clubes de la FIFA?$4$2$6";
+        preguntas[i++] = "¿Cuál fue el primer presidente del Real Madrid?$Julián Palacios$Santiago Bernabéu$Florentino Pérez";
+        preguntas[i++] = "¿Quién es el único jugador en la historia del Real Madrid en marcar en los seis partidos de una fase de grupos de la Liga de Campeones?$Cristiano Ronaldo$Raúl González$Gareth Bale";
+        preguntas[i++] = "¿Quién es el máximo goleador en una sola temporada de La Liga para el Real Madrid?$Cristiano Ronaldo$Lionel Messi$Raúl González";
+        preguntas[i++] = "¿En qué año el Real Madrid ganó su primera Copa del Rey?$1905$1910$1920";
+        preguntas[i++] = "¿Quién fue el primer jugador del Real Madrid en ganar el Balón de Oro?$Alfredo Di Stéfano$Lionel Messi$Cristiano Ronaldo";
+        preguntas[i++] = "¿Cuál es el nombre del estadio de entrenamiento del Real Madrid?$Ciudad Real Madrid$Estadio Alfredo Di Stéfano$Ciudad Deportiva";
+        preguntas[i++] = "¿Quién fue el máximo goleador del Real Madrid en la temporada 2020-2021?$Karim Benzema$Lionel Messi$Cristiano Ronaldo";
+        
+        preguntas[i++] = "¿Cuántas veces ha ganado el Real Madrid la Supercopa de Europa?$4$6$2";
+        
+        preguntas[i++] = "¿Cuántas veces ha ganado el Real Madrid la Supercopa de España?$8$12$16";
+        
+        preguntas[i++] = "¿Cuál es el nombre del equipo de fútbol rival del Real Madrid en la ciudad de Madrid?$Atlético de Madrid$FC Barcelona$Valencia CF";
+        preguntas[i++] = "¿Cuál es el país de origen del Real Madrid?$España$Argentina$Italia";
+        
+        preguntas[i++] = "¿Cuál fue el primer título internacional ganado por el Real Madrid?$Copa Latina 1955$Copa Intercontinental 1960$Copa UEFA 1985";
+        preguntas[i++] = "¿Quién fue el entrenador del Real Madrid cuando ganaron su décima Liga de Campeones de la UEFA en 2014?$Carlo Ancelotti$Jose Mourinho$Rafael Benítez";
+        
+        preguntas[i++] = "¿Quién es el único jugador que ha ganado cinco Ligas de Campeones de la UEFA con el Real Madrid?$Cristiano Ronaldo$Zinedine Zidane$Raúl González";
+        preguntas[i++] = "¿Cuántas veces ha ganado el Real Madrid la Supercopa de la UEFA?$4$6$2";
+        preguntas[i++] = "¿Cuál es el apodo del Real Madrid?$Los Merengues$Los Leones$Los Vikingos";
+        preguntas[i++] = "¿Cuál era el mote de Cristiano Ronaldo?$El bicho$El santo$El luso";
+
+        var numerosAnteriores = [];        
+        var contadorPreguntas = 0;
+        var respuestasCorrectas = 0;
+        var respuestaOK = "";
+        
+        function cargarPregunta() {
+            document.getElementById('respuesta1').style.backgroundColor = '#1976d2';
+            document.getElementById('respuesta2').style.backgroundColor = '#1976d2';
+            document.getElementById('respuesta3').style.backgroundColor = '#1976d2';
+            
+            if (contadorPreguntas >= 10) {
+    // Si se han mostrado 10 preguntas, redirigir a la página de resultados con el número de respuestas correctas
+    window.location.href = "./resultadoQuiz.html?respuestasCorrectas=" + respuestasCorrectas;
+    return;
+}
+            
+            var numeroAleatorio;
+            do {
+                numeroAleatorio = Math.floor(Math.random() * preguntas.length);
+            } while (numerosAnteriores.includes(numeroAleatorio));
+            
+            numerosAnteriores.push(numeroAleatorio);
+            
+            var fila = preguntas[numeroAleatorio].split("$");
+            var q = fila[0];
+            respuestaOK = fila[1];
+            var respuestasIncorrectas = fila.slice(2);
+            
+            document.getElementById("pregunta").innerHTML = q;
+            
+            var respuestas = [respuestaOK, ...respuestasIncorrectas];
+            respuestas = shuffleArray(respuestas);
+            
+            document.getElementById('respuesta1').value = respuestas[0];
+            document.getElementById('respuesta2').value = respuestas[1];
+            document.getElementById('respuesta3').value = respuestas[2];
+            
+            contadorPreguntas++;
+        }
+        
+        function validarRespuesta(boton) {
+            if (boton.value == respuestaOK) {
+                respuestasCorrectas++;
+                boton.style.backgroundColor = "green";
+                mostrarImagenCorrecta(boton.parentNode);
+            } else {
+                boton.style.backgroundColor = "red";
+                mostrarImagenIncorrecta(boton.parentNode);
+            }
+        }
+
+        function mostrarImagenCorrecta(parentNode) {
+    // Eliminar imágenes correctas anteriores si las hay
+    var imagenCorrectaAnterior = parentNode.querySelector('.correcta');
+    if (imagenCorrectaAnterior) {
+        imagenCorrectaAnterior.remove();
+    }
+
+    var imagenIncorrectaAnterior = parentNode.querySelector('.incorrecta');
+    if (imagenIncorrectaAnterior) {
+        imagenIncorrectaAnterior.remove();
+    }
+
+    var imagenCorrecta = document.createElement('img');
+    imagenCorrecta.src = 'descarga (1).jfif'; // Ruta de la imagen correcta
+    imagenCorrecta.alt = 'Respuesta Correcta';
+    imagenCorrecta.classList.add('correcta');
+    parentNode.appendChild(imagenCorrecta);
+    setTimeout(cargarPregunta, 800);
+}
+
+function mostrarImagenIncorrecta(parentNode) {
+    // Eliminar imágenes incorrectas anteriores si las hay
+    var imagenCorrectaAnterior = parentNode.querySelector('.correcta');
+    if (imagenCorrectaAnterior) {
+        imagenCorrectaAnterior.remove();
+    }
+
+    var imagenIncorrectaAnterior = parentNode.querySelector('.incorrecta');
+    if (imagenIncorrectaAnterior) {
+        imagenIncorrectaAnterior.remove();
+    }
+
+    var imagenIncorrecta = document.createElement('img');
+    imagenIncorrecta.src = 'descarga.jfif'; // Ruta de la imagen incorrecta
+    imagenIncorrecta.alt = 'Respuesta Incorrecta';
+    imagenIncorrecta.classList.add('incorrecta');
+    parentNode.appendChild(imagenIncorrecta);
+    setTimeout(cargarPregunta, 800);
+}
+
+    
+
+        function shuffleArray(array) {
+            for (var i = array.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+            return array;
+        }
+    </script>
+</head>
+
+<body onload="cargarPregunta()">
+    <div class="container">
+        <div class="logo-container">
+            <img src="logo.jpg" class="real-madrid-logo" title="Real Madrid" onclick="openModal(this)">
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="logo-container">
+           
+            <h1 id="pregunta" name="pregunta">¿Esta es la pregunta y así queda?</h1>
+            <input class="original-button" type="button" id="respuesta1" name="respuesta1" value="Respuesta 1" onclick="validarRespuesta(this)" />
+            <input class="original-button" type="button" id="respuesta2" name="respuesta2" value="Respuesta 2" onclick="validarRespuesta(this)" />
+            <input class="original-button" type="button" id="respuesta3" name="respuesta3" value="Respuesta 3" onclick="validarRespuesta(this)" />
+        </div>
+    </div>
+</body>
+</html>

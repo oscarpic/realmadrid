@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>   
+    <meta charset="UTF-8">
+    <title>Página de Inicio - Real Madrid</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo-container {
+            margin-top: 20px;
+        }
+
+        img.real-madrid-logo {
+            /* Mantén el tamaño original del escudo del Real Madrid */
+            max-width: 200px;
+            height: auto;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+
+        .result-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .result {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #ffffff;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .original-button {
+            line-height: 1;
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 18px;
+            border-radius: 10px;
+            width: 200px;
+            height: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            background-color: #1976d2;
+            padding: 2px;
+        }
+
+        .original-button:hover {
+            opacity: .7;
+        }
+		
+    </style>
+	
+     <script>
+        // Obtener el parámetro de la URL
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+        window.onload = function() {
+            // Obtener el valor del parámetro 'respuestasCorrectas' de la URL
+            var respuestasCorrectas = getParameterByName('respuestasCorrectas');
+
+            // Mostrar el número de respuestas correctas en la página
+            if (!isNaN(respuestasCorrectas) && respuestasCorrectas >= 0 && respuestasCorrectas <= 10) {
+                // Mostrar el mensaje con el número de respuestas correctas
+                var resultadoContainer = document.querySelector('.result-container');
+                var resultadoDiv = document.getElementById('r' + respuestasCorrectas);
+                if (resultadoDiv) {
+                    resultadoDiv.style.display = 'block';
+                } else {
+                    console.error("No se encontró el elemento para mostrar el resultado:", respuestasCorrectas);
+                }
+            } else {
+                console.error("El parámetro 'respuestasCorrectas' no es válido:", respuestasCorrectas);
+            }
+        };
+    </script>
+	
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="logo-container">
+            <img src="logo.jpg" class="real-madrid-logo" title="Real Madrid" onclick="openModal(this)">
+        </div>
+    </div>
+
+    <div class="result-container">
+        <div id="r0" style="display:none" class="result">Resultado 0</div>
+        <div id="r1" style="display:none" class="result">Resultado 1</div>
+        <div id="r2" style="display:none" class="result">Resultado 2</div>
+        <div id="r3" style="display:none" class="result">Resultado 3</div>
+        <div id="r4" style="display:none" class="result">Resultado 4</div>
+        <div id="r5" style="display:none" class="result">Resultado 5</div>
+        <div id="r6" style="display:none" class="result">Resultado 6</div>
+        <div id="r7" style="display:none" class="result">Resultado 7</div>
+        <div id="r8" style="display:none" class="result">Resultado 8</div>
+        <div id="r9" style="display:none" class="result">Resultado 9</div>
+        <div id="r10" style="display:none" class="result">Resultado 10</div>
+    </div>
+
+    <center>
+        <input class="original-button" type="button" id="volver" name="volver" value="Volver" onclick="window.location.href='./quiz.html'" />
+    </center>
+	
+</body>  
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tres en Raya</title>
+    <style>
+        body {
+            font-size: 20px;
+        }
+
+        .container {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        #game-board {
+            display: grid;
+            grid-template-columns: repeat(3, 150px); /* Aumentado el tamaño de las casillas */
+            gap: 10px; /* Aumentado el espacio entre las casillas */
+            margin-bottom: 40px; /* Aumentado el margen inferior del tablero */
+            margin-left: calc(50% - 225px); /* Centrando el tablero horizontalmente */
+        }
+
+        .square {
+            width: 150px; /* Aumentado el tamaño de las casillas */
+            height: 150px; /* Aumentado el tamaño de las casillas */
+            border: 1px solid black;
+            background-size: cover;
+        }
+
+        #winner-message {
+            font-size: 40px; /* Aumentado el tamaño del mensaje de ganador */
+            font-weight: bold;
+            margin-top: 30px; /* Aumentado el margen superior del mensaje de ganador */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Tres en Raya</h1>
+        <div id="game-board">
+            <div class="square" onclick="handleClick(0)"></div>
+            <div class="square" onclick="handleClick(1)"></div>
+            <div class="square" onclick="handleClick(2)"></div>
+            <div class="square" onclick="handleClick(3)"></div>
+            <div class="square" onclick="handleClick(4)"></div>
+            <div class="square" onclick="handleClick(5)"></div>
+            <div class="square" onclick="handleClick(6)"></div>
+            <div class="square" onclick="handleClick(7)"></div>
+            <div class="square" onclick="handleClick(8)"></div>
+        </div>
+        <div id="winner-message"></div>
+    </div>
+
+    <script>
+        const player1 = 'escudo-madrid.png'; // Ruta de la imagen del jugador 1
+        const player2 = 'escudo-barcelona.jfif'; // Ruta de la imagen del jugador 2
+        let currentPlayer = player1;
+        const squares = document.querySelectorAll('.square');
+        const winnerMessage = document.getElementById('winner-message');
+
+        function handleClick(index) {
+            const square = squares[index];
+            if (!square.style.backgroundImage) {
+                square.style.backgroundImage = `url(${currentPlayer})`;
+                currentPlayer = currentPlayer === player1 ? player2 : player1;
+                checkWinner();
+            }
+        }
+
+        function checkWinner() {
+            const lines = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8], // Horizontales
+                [0, 3, 6], [1, 4, 7], [2, 5, 8], // Verticales
+                [0, 4, 8], [2, 4, 6] // Diagonales
+            ];
+
+            let isBoardFull = true;
+            for (let line of lines) {
+                const [a, b, c] = line;
+                if (squares[a].style.backgroundImage && squares[a].style.backgroundImage === squares[b].style.backgroundImage && squares[a].style.backgroundImage === squares[c].style.backgroundImage) {
+                    const winner = currentPlayer === player1 ? 'Player 2' : 'Player 1';
+                    winnerMessage.textContent = `${winner} win!`;
+                    setTimeout(resetGame, 1000); // Reiniciar el juego después de 1 segundo
+                    return;
+                }
+            }
+
+            // Verificar si el tablero está lleno
+            squares.forEach(square => {
+                if (!square.style.backgroundImage) {
+                    isBoardFull = false;
+                }
+            });
+
+            if (isBoardFull) {
+                winnerMessage.textContent = 'Empate!';
+                setTimeout(resetGame, 1000); // Reiniciar el juego después de 1 segundo
+            }
+        }
+
+        function resetGame() {
+            squares.forEach(square => {
+                square.style.backgroundImage = '';
+            });
+            currentPlayer = player1;
+            setTimeout(() => {
+                winnerMessage.textContent = '';
+            }, 2000); // El mensaje de ganador/empate se limpiará después de 2 segundos
+        }
+    </script>
+</body>
+</html>
